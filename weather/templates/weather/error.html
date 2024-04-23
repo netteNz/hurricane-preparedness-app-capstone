@@ -1,0 +1,12 @@
+{% extends 'weather/base.html' %}
+{% csrf_token %}
+{% load static %}
+
+{% block title %}Error - Weather Dashboard{% endblock %}
+{% block content %}
+<div class="alert alert-danger" role="alert">
+    {{ error_message }}
+</div>
+<a href="/" class="btn btn-primary">Try Again</a>
+{% endblock %}
+

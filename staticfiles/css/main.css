@@ -1,0 +1,80 @@
+/* main.css */
+#map {
+  height: 100%;
+}
+
+.custom-marker {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.3);
+    text-align: center;
+    white-space: nowrap;
+}
+
+
+header {
+  padding-top: 20px;
+  background-color: #1c1c1c; /* Slightly lighter dark shade for the header */
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 30px; /* Space between the header and the cards */
+}
+
+body {
+  height: 100%;
+  background-color: #121212; /* or any dark shade you prefer */
+  color: #ffffff; /* for general text */
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif; /* Optional: set a default font-family */
+  text-align: center;
+}
+
+.form-control {
+  color: #ddd; /* Light grey text for form content */
+  width: 100%;
+  margin: auto; /* To center align if needed */
+}
+
+.custom-class {
+  width: 100%; /* Adjust this value to what you find appropriate */
+  max-width: 500px; /* Set a maximum width if you want to limit how wide the field can get */
+  display: block; /* To ensure it takes up the full width you set */
+  margin: 0 auto; /* This will center the input field if its width is less than 100% */
+}
+
+@media (max-width: 768px) {
+  .custom-class {
+    max-width: 100%; /* On smaller screens, the input can take up the full width */
+  }
+}
+
+.card-image-top {
+  width: 100%; /* Ensures the image covers the entire width of the card */
+}
+
+.card {
+  background-color: #252525; /* Dark shade for the card */
+  border-radius: 10px;     /* Optional: Rounds the corners of the border */
+  text-align: center;
+  margin-bottom: 15px;       /* Adds space above and below each card */
+  padding: 10px;           /* Adds space inside the card, around the content */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Optional: Adds a subtle shadow */
+  box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+}
+
+.card h5, h2, h4 .card p {
+  color: #eaeaea; /* Light grey text for card content */
+}
+
+.card img {
+  filter: brightness(0) invert(1); /* Inverts the color of images for better visibility */
+}
+
+.footer {
+  background-color: #333; /* Consistent with the navbar */
+  border-top: 1px solid #444; /* Similar to navbar's bottom border */
+}
+

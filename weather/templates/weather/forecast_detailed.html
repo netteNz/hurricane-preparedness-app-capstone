@@ -1,0 +1,63 @@
+{% extends 'weather/base.html' %}
+{% csrf_token %}
+{% load static %}
+
+{% block title %}
+  Detailed Forecast - Weather Dashboard
+{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+{% endblock %}
+
+
+{% block content %}
+  {% if detailed_data %}
+    <div class="row">
+      {% for day in detailed_data %}
+        <div class="col-md-4 mb-4">
+          <div class="card mb-3">
+            <div class="card-body p-4">
+              <h4 class="mb-4" style="color: white;">{{ day.date|date:'F d, Y' }}</h4>
+              <p class="mb-0" style="color: white;">
+                Current temperature: <strong>{{ day.temperature.day }}°C</strong>
+              </p>
+              <p class="mb-0" style="color: white;">
+                Feels like: <strong>{{ day.feels_like.day }}°C</strong>
+              </p>
+              <p style="color: white;">
+                Max: <strong>{{ day.temperature.max }}°C</strong>, Min: <strong>{{ day.temperature.min }}°C</strong>
+              </p>
+              <div class="mt-3" >
+                  <p class="mb-0" style="color: white;">
+                      Weather Description: <strong>{{ day.weather.0.description }}</strong>
+                  </p>
+                <img src="http://openweathermap.org/img/w/{{ day.weather.0.icon }}" alt="Weather Icon" style="width: 50px; vertical-align: middle;" />
+              </div>
+              <div class="weather-info mt-3" style="color: white;">
+                <p class="mb-0" style="color: white;">Pressure: {{ day.pressure }} hPa</p>
+                <p class="mb-0" style="color: white;">Humidity: {{ day.humidity }}%</p>
+                <p class="mb-0" style="color: white;">Wind: {{ day.wind_speed }} m/s, Direction: {{ day.wind_deg }}°</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-dark" role="alert">No detailed data available. Please enter a valid city.</div>
+  {% endif %}
+  <!-- Example for other JS files -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/static/serviceworker.js', { scope: '/' })
+        .then(function (registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope)
+        })
+        .catch(function (err) {
+          console.log('ServiceWorker registration failed: ', err)
+        })
+    }
+  </script>
+{% endblock %}

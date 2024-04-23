@@ -1,0 +1,36 @@
+html {
+  scroll-behavior: smooth;
+  transition: all 0.3s ease;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+a :hover {
+    text-decoration: underline;
+    }
+.showcase-img {
+    border-radius: 10px;     /* Optional: Rounds the corners of the border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+.showcase-img:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+.feature-row:hover {
+  /* Add any hover styles you like here */
+  background-color: #f8f9fa; /* Example: changes background on hover */
+}
+.feature-row {
+  /* Add any styles you like here */
+  padding: 20px; /* Example: adds padding to the feature row */
+}
+
+/* Make sure the images take the full width of the container */
+.card-img-top {
+  width: 100%; /* this makes your image responsive and full width */
+  height: auto; /* keeps the aspect ratio of the image */
+}

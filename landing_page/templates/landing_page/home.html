@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'imgs/ico.webp' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/htmx.org"></script>
+    <title>
+      {% block title %}
+        Weather Dashboard
+      {% endblock %}
+    </title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Inside the <head> section -->
+    <style>
+        a:hover {
+            text-decoration: underline;
+            }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+        .container-fluid {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .page-footer {
+            padding-top: 32px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            padding-bottom: 20px
+        }
+        .page-footer a {
+            margin: 0 10px;
+            display: inline-block;
+            color: #282b2d;
+            font-size: 18px
+        }
+        page-footer .links {
+            display: inline-block
+        }
+        .features-section .p-5 {
+          padding: 3rem !important;
+        }
+        .features-section img {
+          max-width: 100%;
+          height: auto;
+        }
+        @media (max-width: 992px) {
+          .features-section .row .col-lg-6 {
+            margin-bottom: 30px;
+          }
+        }
+        body {
+            color: #000000; /* for general text */
+            font-family: 'Roboto', sans-serif; /* Optional: set a default font-family */
+            text-align: center;
+        }
+        .weather-info p, .card-body p {
+            text-align: center; /* centers the weather info text */
+            margin-bottom: 0.5rem; /* consistent spacing between paragraphs */
+        }
+        .footer {
+            background-color: #333; /* Consistent with the navbar */
+            border-top: 1px solid #444; /* Similar to navbar's bottom border */
+        }
+        /* Responsive design for the cards */
+        @media (max-width: 768px) {
+            .col-md-4 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="50">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <a class="navbar-brand" style="padding-left: 15px; padding-top: 15px;" href="">Weather Insights</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="map/map-voting/">Resource Maps</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="/forecast/">Local Weather Forecast</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="/todo/">To-Do Checklist</a>
+              </li>
+          </ul>
+        </div>
+</nav>
+
+<div class="container my-5">
+        <div class="card">
+            <img src="{% static 'imgs/hero.webp' %}" class="card-img-top" alt="Weather Forecasting">
+        </div>
+    </div>
+
+
+    <!-- Image Showcases-->
+    <section class="showcase">
+        <div class="container">
+            <!-- Feature 1: Weather Forecasting -->
+            <div class="row feature-row" data-aos="fade-up">
+                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="padding-right: 0px; padding-left: 0px;">
+                    <img src="{% static 'imgs/forecast.webp' %}" alt="Weather Forecasting" class="rounded-corners" style="width:100%;height:auto;" >
+                </div>
+                <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+                    <h2>Weather Forecasting</h2>
+                    <p class="lead mb-0">Get accurate and up-to-date weather forecasts to plan your day effectively. Our weather forecasting tool provides you with real-time weather updates and alerts.</p>
+                </div>
+            </div>
+            <!-- Feature 2: Google Maps Interactivity -->
+            <div class="row feature-row" data-aos="fade-up">
+                <div class="col-lg-6 text-white showcase-img" style="padding-left: 0px; padding-right: 0px;">
+                    <img src="{% static 'imgs/google-maps.webp' %}" alt="Google Maps Interactivity" class="rounded-corners" style="width:100%;height:auto;"></div>
+                <div class="col-lg-6 my-auto showcase-text">
+                    <h2>Google Maps Interactivity</h2>
+                    <p class="lead mb-0">Explore the world around you with our interactive Google Maps feature. Find places, get directions, and discover new destinations.</p>
+                </div>
+            </div>
+            <!-- Feature 3: Todo List -->
+            <div class="row feature-row" data-aos="fade-up">
+                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="padding-right: 0px; padding-left: 0px;">
+                    <img src="{% static 'imgs/to-do.webp' %}" alt="To-Do App" class="rounded-corners" style="width:100%;height:auto;"></div>
+                <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+                    <h2>Todo List</h2>
+                    <p class="lead mb-0">Keep track of your tasks and stay organized with our easy-to-use todo list. Add, edit, and complete tasks to manage your daily activities efficiently.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% include 'components/footer.html' %}
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1200, // duration of animations in milliseconds
+  });
+</script>
+
+</body>
+</html>

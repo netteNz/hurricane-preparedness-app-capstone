@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+{% load static %}
+{% load custom_filters %}
+<html lang="en">
+  <head>
+
+      <meta charset="utf-8" />
+      <meta name="csrf-token" content="{{ csrf_token }}" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>
+
+      {% block title %}
+        Resource Map
+      {% endblock %}
+      </title>
+      <!-- Inside the <head> section -->
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'imgs/ico.webp' %}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Resource Map</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7mz3cFgW2AiTqfBAGQdp7NooU6eq0Ci4&callback=initMap"></script>
+
+
+    <script>
+        function initMap() {
+
+            var mapOptions = {
+                center: new google.maps.LatLng(18.2244, -66.0457),
+                zoom: 14
+            };
+
+            const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            waypoints.forEach(function (waypoint) {
+                var markerPosition = new google.maps.LatLng(waypoint.latitude, waypoint.longitude);
+                var marker = new google.maps.Marker({
+                    position: markerPosition,
+                    map: map,
+                    title: waypoint.fields.name // assuming you have a name field
+                });
+                // Add click event to each marker to open the voting modal
+                marker.addListener('click', function() {
+                    $('#waypointModal-' + waypoint.pk).modal('show');
+                });
+                });$(document).ready(function() {
+                    $("#waypointModal-{{ waypoint.pk }}").modal('show');
+                });
+        } // The google.maps.event.addDomListener line can be removed since it's redundant with the async defer callback
+    </script>
+    {% block content %}
+
+    {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.11/dist/htmx.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker
+            .register('/serviceworker.js', { scope: '/' })
+            .then(function (registration) {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope)
+            })
+            .catch(function (err) {
+              console.log('ServiceWorker registration failed: ', err)
+            })
+        })
+      }
+    </script>
+    <script>
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            event.detail.headers['X-CSRFToken'] = csrfToken;
+        });
+</script>
+
+  </body>
+</html>

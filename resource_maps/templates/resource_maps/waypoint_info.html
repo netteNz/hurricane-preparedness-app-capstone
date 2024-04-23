@@ -1,0 +1,14 @@
+{% load static %}
+<strong>Waypoint Information</strong>
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ waypoint.name }}</h2>
+    <p>{{ waypoint.description }}</p>
+    <div>
+        <strong>Vote Score:</strong> {{ vote_score }}<br>
+        <strong>Vote Percentage:</strong> {{ vote_percentage }}%
+    </div>
+    <!-- Other details and potentially a map showing the location -->
+</div>
+{% endblock %}
