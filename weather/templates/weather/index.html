@@ -4,16 +4,9 @@
 {% block title %}Weather Dashboard Search{% endblock %}
 
 {% block content %}
-    <script src="https://unpkg.com/htmx.org"></script>
-    <form hx-post="/forecast/" hx-target="#weather-result" hx-swap="outerHTML" class="form my-4 text-center">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label type="hidden" for="city" class="form-label">City</label>
-            <input type="text" class="form-control custom-class" id="city" name="city" placeholder="Enter City Name">
-        </div>
-        <button type="submit" class="btn btn-primary">Get Weather</button>
+    <form method="post" class="form my-4 text-center">
+    {% csrf_token %}
+        <input type="text" name="city" class="form-control-sm mr-sm-2" placeholder="Enter City Name" style="width: 116px;">
+        <button type="submit" class="form-button btn btn-primary">Get Weather</button>
     </form>
-    <div id="weather-result">
-        <!-- The response from /forecast/ will replace this div's content -->
-    </div>
 {% endblock %}

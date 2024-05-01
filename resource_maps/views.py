@@ -41,15 +41,14 @@ def waypoint_info(request, waypoint_id):
     return render(request, 'resource_maps/waypoint_info.html', context)
 
 @require_http_methods(["POST"])
-def vote_waypoint(request, waypoint_id, vote_type):
-    logger.debug(f"Voting {vote_type} on waypoint {waypoint_id}")
+def vote_waypoint(request, waypoint_id, vote_option):
+    logger.debug(f"Voting {vote_option} on waypoint {waypoint_id}")
     waypoint = get_object_or_404(Waypoint, pk=waypoint_id)
     # Updating votes to ensure thread safety
-    if vote_type == 'yes':
-        waypoint.votes_yes = F('votes_yes') + 1
-    elif vote_type == 'no':
-        waypoint.votes_no = F('votes_no') + 1
-    waypoint.save()
+    if vote_option == 'yes':
+        Waypoint.objects.filter(pk=waypoint_id).update(votes_yes=F('votes_yes') + 1)
+    elif vote_option == 'no':
+        Waypoint.objects.filter(pk=waypoint_id).update(votes_no=F('votes_no') + 1)
     waypoint.refresh_from_db()  # Refresh the instance to get updated values from the database
 
     return JsonResponse({
@@ -57,4 +56,3 @@ def vote_waypoint(request, waypoint_id, vote_type):
         'vote_score': waypoint.vote_score(),
         'vote_percentage': waypoint.vote_percentage()
     })
-

@@ -7,8 +7,36 @@
     <script>
     // Preparing waypoint data from Django context to JavaScript
     var waypoints = JSON.parse('{{ waypoints_json|escapejs }}');
-    // Import required libraries
-    google.maps.importLibrary("marker");
+    var voteScores = JSON.parse('{{ vote_scores_json|escapejs }}');
+        function updateModalContent(swapInfo) {
+            var response = JSON.parse(swapInfo.detail.xhr.responseText);
+            // Now update the modal content with the new data
+            document.querySelector('#voteScore-' + response.waypoint_id).textContent = "Vote Score: " + response.vote_score;
+            document.querySelector('#votePercentage-' + response.waypoint_id).textContent = "Vote Percentage: " + response.vote_percentage + "%";
+    }
+
+    // Function to update and show the modal for a waypoint
+    function updateAndShowModal(waypointItem) {
+        var waypoint = waypointItem.fields; // Access the 'fields' object for each waypoint
+        // Set the content of the modal
+        var modalID = '#waypointModal-' + waypointItem.pk;
+        $(modalID + ' .modal-title').text(waypoint.name);
+        $(modalID + ' .modal-body').html(waypoint.description + '<br>Vote Score: ' +
+            '<span id="voteScore-' + waypointItem.pk + '">' + (waypoint.votes_yes - waypoint.votes_no) + '</span><br>Vote Percentage: ' +
+            '<span id="votePercentage-' + waypointItem.pk + '">' + calculateVotePercentage(waypoint.votes_yes, waypoint.votes_no) + '</span>');
+
+        // Show the modal
+        $(modalID).modal('show');
+    }
+    // Function to handle updating the modal content after a vote
+
+
+    // Utility function to calculate vote percentage
+    function calculateVotePercentage(votesYes, votesNo) {
+        var totalVotes = votesYes + votesNo;
+        return totalVotes > 0 ? ((votesYes / totalVotes) * 100).toFixed(2) + '%' : '0%';
+    }
+
     function initMap() {
         var mapOptions = {
             center: new google.maps.LatLng(18.2244, -66.0457), // Default center of the map
@@ -16,26 +44,32 @@
         };
         var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-        waypoints.forEach(function(item) {
-            var waypoint = item.fields; // Access the 'fields' object for each waypoint
-            var markerPosition = new google.maps.LatLng(waypoint.latitude, waypoint.longitude);
+        waypoints.forEach(function (item) {
+            var markerPosition = new google.maps.LatLng(item.fields.latitude, item.fields.longitude);
             var marker = new google.maps.Marker({
                 position: markerPosition,
                 map: map,
-                title: waypoint.name
+                title: item.fields.name
             });
-                    // Add click event to each marker to open an info window or trigger another action
+
+            // Add click event to each marker to open the corresponding Bootstrap modal
             marker.addListener('click', function() {
-                var contentString = '<div><strong>' + waypoint.name + '</strong><p>' + waypoint.description + '</p></div>';
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString
-                });
-                infowindow.open(map, marker);
+                updateAndShowModal(item);
             });
         });
     }
     </script>
-    {% include 'resource_maps/waypoint_info.html' %}
+
+    <!-- Load the Google Maps API script asynchronously with a callback to initMap -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7mz3cFgW2AiTqfBAGQdp7NooU6eq0Ci4&callback=initMap&libraries=places"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.11/dist/htmx.min.js"></script>
+    <script>
+      document.body.addEventListener('htmx:configRequest', (event) => {
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        event.detail.headers['X-CSRFToken'] = csrfToken;
+      });
+    </script>
+
     <!-- Waypoint voting modals -->
     {% for waypoint in waypoints %}
     <div class="modal fade" id="waypointModal-{{ waypoint.pk }}" tabindex="-1" role="dialog" aria-labelledby="waypointModalLabel-{{ waypoint.pk }}" aria-hidden="true">
@@ -47,15 +81,15 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="voteInfo-{{ waypoint.pk }}">
                     <p>{{ waypoint.description }}</p>
-                    <p>Vote Score: {{ vote_scores|get_by_key:waypoint.pk }}</p>
-                    <p>Vote Percentage: {{ vote_percentages|get_by_key:waypoint.pk }}%</p>
+                    <p>Vote Score: <span id="voteScore-{{ waypoint.pk }}">{{ vote_scores|get_by_key:waypoint.pk }}</span></p>
+                    <p>Vote Percentage: <span id="votePercentage-{{ waypoint.pk }}">{{ vote_percentages|get_by_key:waypoint.pk }}%</span></p>
                 </div>
                 <div class="modal-footer">
                     <!-- Simple Bootstrap buttons for voting -->
-                    <button type="button" class="btn btn-success" hx-post="{% url 'resource_maps:vote_waypoint' waypoint.id 'yes' %}" hx-trigger="click" hx-target="#waypointInfo" hx-swap="outerHTML">Yes</button>
-                    <button type="button" class="btn btn-danger" hx-post="{% url 'resource_maps:vote_waypoint' waypoint.id 'no' %}" hx-trigger="click" hx-target="#waypointInfo" hx-swap="outerHTML">No</button>
+                    <button type="button" class="btn btn-success" hx-post="{% url 'resource_maps:vote_waypoint' waypoint.pk 'yes' %}" hx-trigger="click" hx-target="#voteInfo-{{ waypoint.pk }}" hx-swap="innerHTML" hx-after-swap="updateModalContent">Yes</button>
+                    <button type="button" class="btn btn-danger" hx-post="{% url 'resource_maps:vote_waypoint' waypoint.pk 'no' %}" hx-trigger="click" hx-target="#voteInfo-{{ waypoint.pk }}" hx-swap="innerHTML" hx-after-swap="updateModalContent">No</button>
                 </div>
             </div>
         </div>
@@ -63,13 +97,3 @@
     {% endfor %}
 
 {% endblock %}
-
-<!-- Load the Google Maps API script asynchronously with a callback to initMap -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7mz3cFgW2AiTqfBAGQdp7NooU6eq0Ci4&callback=initMap&libraries=places"></script>
-<script src="https://unpkg.com/htmx.org@1.9.11/dist/htmx.min.js"></script>
-<script>
-  document.body.addEventListener('htmx:configRequest', (event) => {
-    var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    event.detail.headers['X-CSRFToken'] = csrfToken;
-  });
-</script>

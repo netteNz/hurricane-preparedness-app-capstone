@@ -38,8 +38,9 @@
 
 
     <script>
-        function initMap() {
+        var currentWaypoint = null;
 
+        function initMap() {
             var mapOptions = {
                 center: new google.maps.LatLng(18.2244, -66.0457),
                 zoom: 14
