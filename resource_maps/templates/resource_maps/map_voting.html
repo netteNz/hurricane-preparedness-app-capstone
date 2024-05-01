@@ -95,5 +95,16 @@
         </div>
     </div>
     {% endfor %}
-
-{% endblock %}
+    <!-- New Section for Listing Active Waypoints -->
+    <div class="container mt-4">
+        <h3>Active Waypoints</h3>
+        <div class="list-group">
+        {% for waypoint in waypoints %}
+            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+              {{ waypoint.name }}
+              <span class="badge badge-primary badge-pill">{{ waypoint.vote_score }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}

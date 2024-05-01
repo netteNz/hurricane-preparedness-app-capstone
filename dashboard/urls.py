@@ -22,6 +22,6 @@ urlpatterns = [
     path('', include('landing_page.urls')),
     path('', include('weather.urls')),
     path('map/', include('resource_maps.urls')),
-    path('todo/', include('todo.urls', namespace='todo')),
+    path('todo/', include(('todo.urls', 'todo'))),  # Correct way to include with namespace
     path('', include('service_worker.urls')),
 ]

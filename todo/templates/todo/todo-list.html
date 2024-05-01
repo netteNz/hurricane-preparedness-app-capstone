@@ -1,26 +1,27 @@
-{% extends 'todo/base.html' %}
-{% if todos %}
+<!-- todo_list.html in the todo app -->
 
-<div class="card" style="width: 18rem;">
-    <ul class="list-group list-group-flush">
-        {% for todo in todos %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <div class="{% if todo.completed %} text-success text-decoration-line-through {% endif %}">
-                {{ todo.title }}
-            </div>
-            <div>
-                <span class="action badge rounded-pill text-bg-warning" hx-get="{% url 'mark_todo' todo.pk %}"
-                  hx-target="#todoList" style="cursor: pointer;">✔</span>
-                <span class="action badge rounded-pill text-bg-danger" hx-delete="{% url 'delete_todo' todo.pk %}"
-                  hx-target="#todoList" hx-confirm="Are you sure you wish to delete?" style="cursor: pointer;">X</span>
-            </div>
+{% load static %}
+
+<html>
+<head>
+    <title>Todo List</title>
+    <script src="https://unpkg.com/htmx.org"></script>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <form method="post" hx-post="" hx-target="#todo-list" hx-swap="outerHTML">
+        {% csrf_token %}
+        <input type="text" name="description" placeholder="Add new todo">
+        <button type="submit">Add</button>
+    </form>
+
+    <ul id="todo-list">
+    {% for todo in todos %}
+        <li style="{% if todo.completed %}text-decoration: line-through;{% endif %}"
+            hx-get="{% url 'toggle_todo' todo.pk %}" hx-trigger="click" hx-target="this" hx-swap="outerHTML">
+            {{ todo.description }}
         </li>
-        {% endfor %}
+    {% endfor %}
     </ul>
-</div>
-
-{% else %}
-
-<h5>Currently, you don't have any todos.</h5>
-
-{% endif %}
+</body>
+</html>

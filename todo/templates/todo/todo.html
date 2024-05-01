@@ -3,7 +3,7 @@
 {% block content %}
 
 <h3 class="my-5">Welcome to Your Todo List</h3>
-<form hx-post="{% url 'todo:create_todo' %}" hx-target="#todoList" class="mx-auto">
+<form hx-post="{% url 'todo:create_todo' %}" hx-target="#todoList" class="mx-auto" hx-swap="outerHTML">
     {% csrf_token %}
     <div class="mb-3 row align-items-center">
         <label for="todoText" class="col-auto col-form-label">Enter your todo here: </label>
