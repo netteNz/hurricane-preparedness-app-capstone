@@ -46,11 +46,11 @@ Puerto Rico's geographical position makes it prone to frequent and severe hurric
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/hurricane-preparedness-app.git
+git clone https://github.com/yourusername/hurricane-preparedness-app-capstone.git
 ```
 # Navigate to the project directory
 ```bash
-cd hurricane-preparedness-app
+cd hurricane-preparedness-app-capstone
 ```
 
 # Install dependencies
