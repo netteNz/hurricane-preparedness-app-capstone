@@ -1,10 +1,17 @@
 from django.db import models
 
-# 👇 1. Add the following line's
-class Todo(models.Model):
-    title = models.CharField(max_length=100)
+
+# Create your models here.
+class ChecklistItem(models.Model):
+    PRIORITY_CHOICES = [
+        ('high', 'High'),
+        ('medium', 'Medium'),
+        ('low', 'Low'),
+    ]
+
+    description = models.CharField(max_length=255)
+    priority = models.CharField(max_length=6, choices=PRIORITY_CHOICES, default='medium')
     completed = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return self.description

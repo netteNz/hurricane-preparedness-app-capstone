@@ -19,9 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('map/', include('resource_maps.urls')),
     path('', include('landing_page.urls')),
     path('', include('weather.urls')),
-    path('map/', include('resource_maps.urls')),
-    path('todo/', include(('todo.urls', 'todo'))),  # Correct way to include with namespace
     path('', include('service_worker.urls')),
 ]

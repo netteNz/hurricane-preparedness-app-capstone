@@ -46,8 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'weather',
     'resource_maps',
-    'todo',
     'landing_page',
+    'todo',
     'import_export'
 ]
 

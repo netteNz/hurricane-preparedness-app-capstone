@@ -10,7 +10,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-
 def map_view(request):
     waypoints = Waypoint.objects.filter(is_active=True)
     waypoints_json = serialize('json', waypoints)
