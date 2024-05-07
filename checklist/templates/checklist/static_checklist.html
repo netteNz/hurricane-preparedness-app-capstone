@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Preparedness Checklist</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .completed { text-decoration: line-through; }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Hurricane Preparedness Checklist</h1>
+        <ul class="list-group">
+            {% for item in static_items %}
+                <li class="list-group-item {% if completed_dict.item.id %}completed{% endif %}" id="item-{{ item.id }}">
+                    <input type="checkbox" class="mr-2" {% if completed_dict.item.id %}checked{% endif %}
+                           onclick="toggleItem({{ item.id }})">
+                    {{ item.description }} (Priority: {{ item.get_priority_display }})
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script>
+        // JavaScript function to toggle an item's completion status
+        function toggleItem(itemId) {
+            fetch(`/checklist/toggle/${itemId}/`)
+                .then(response => {
+                    if (response.ok) {
+                        const itemElement = document.getElementById(`item-${itemId}`);
+                        const checkbox = itemElement.querySelector('input[type="checkbox"]');
+
+                        // Toggle checkbox state
+                        checkbox.checked = !checkbox.checked;
+
+                        // Toggle the completed class for the 'line-through' effect
+                        itemElement.classList.toggle('completed');
+                    } else {
+                        console.error('Failed to toggle item:', response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

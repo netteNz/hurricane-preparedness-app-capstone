@@ -1,0 +1,42 @@
+html {
+    scroll-behavior: smooth;
+    transition: all 0.3s ease;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+a :hover {
+    text-decoration: underline;
+    }
+.showcase {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+.showcase:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+.rounded-corners {
+  border-radius: 15px; /* Adjust as needed for the desired corner roundness */
+  margin-bottom: 1rem; /* Space between images and text or next item */
+}
+
+/* Optional: Add animations with keyframes or use a library like AOS */
+@keyframes fadeInUp {
+  from {
+    transform: translate3d(0, 40px, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+.feature-row {
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0; /* Start with the element invisible */
+}

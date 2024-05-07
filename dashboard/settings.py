@@ -47,8 +47,8 @@ INSTALLED_APPS = [
     'weather',
     'resource_maps',
     'landing_page',
-    'todo',
-    'import_export'
+    'import_export',
+    'checklist',
 ]
 
 MIDDLEWARE = [
