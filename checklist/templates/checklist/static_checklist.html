@@ -4,11 +4,56 @@
     <meta charset="UTF-8">
     <title>Preparedness Checklist</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        .completed { text-decoration: line-through; }
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .priority-high {
+            border-left: 4px solid red;
+        }
+
+        .priority-medium {
+            border-left: 4px solid orange;
+        }
+
+        .priority-low {
+            border-left: 4px solid green;
+        }
+
+        .checklist-header {
+            text-align: center;
+            margin-bottom: 30px;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" style="padding-left: 15px"; href="">Weather Insights</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="map/map-voting/">Resource Maps</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="/forecast/">Local Weather Forecast</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="/todo/">To-Do Checklist</a>
+              </li>
+          </ul>
+        </div>
+</nav>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Hurricane Preparedness Checklist</h1>
         <ul class="list-group">
