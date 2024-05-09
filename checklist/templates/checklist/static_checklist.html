@@ -3,28 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Preparedness Checklist</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- AOS CSS -->
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        .completed {
+        card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+        completed {
             text-decoration: line-through;
             color: gray;
         }
 
-        .priority-high {
+        priority-high {
             border-left: 4px solid red;
         }
 
-        .priority-medium {
+        priority-medium {
             border-left: 4px solid orange;
         }
 
-        .priority-low {
+        priority-low {
             border-left: 4px solid green;
         }
-
-        .checklist-header {
+        checklist-header {
             text-align: center;
             margin-bottom: 30px;
             margin-top: 30px;
@@ -40,20 +49,26 @@
     <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="/">Home</a>
+                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="/localhost/">Home</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="map/map-voting/">Resource Maps</a>
+                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="/map/map-voting/">Resource Maps</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="/forecast/">Local Weather Forecast</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="/todo/">To-Do Checklist</a>
+                  <a class="nav-link" style="padding-left: 15px; padding-top: 15px;" href="/checklist/">To-Do Checklist</a>
               </li>
           </ul>
-        </div>
+    </div>
 </nav>
+
+<div class="container my-5">
+    <div class="card">
+        <img src="{% static 'imgs/hero.webp' %}" class="card-img-top" alt="Weather Forecasting">
+    </div>
+</div>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Hurricane Preparedness Checklist</h1>
         <ul class="list-group">
