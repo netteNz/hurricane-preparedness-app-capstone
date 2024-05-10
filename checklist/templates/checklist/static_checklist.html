@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,31 +10,31 @@
     <!-- AOS CSS -->
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        card {
+        .card {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
-        card:hover {
+        .card:hover {
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             transform: translateY(-5px);
         }
-        completed {
+        .completed {
             text-decoration: line-through;
             color: gray;
         }
 
-        priority-high {
+        .priority-high {
             border-left: 4px solid red;
         }
 
-        priority-medium {
+        .priority-medium {
             border-left: 4px solid orange;
         }
 
-        priority-low {
+        .priority-low {
             border-left: 4px solid green;
         }
-        checklist-header {
+        .checklist-header {
             text-align: center;
             margin-bottom: 30px;
             margin-top: 30px;
