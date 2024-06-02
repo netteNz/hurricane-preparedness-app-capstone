@@ -35,6 +35,7 @@ share/python-wheels/
 
 # Django stuff:
 *.log
+settings.py
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
