@@ -42,23 +42,13 @@ Puerto Rico's geographical position makes it prone to frequent and severe hurric
 - Integration with mobile platforms to expand accessibility and user engagement.
 - Implementation of machine learning algorithms for predictive analytics on weather patterns.
 
+## Structural Design Flowchart
+Below is a flowchart illustrating the system's architecture and design process:
+
+![Structural Design Flowchart](https://i.imgur.com/OzornGa.png)
+
 ## Setup and Installation
 
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/hurricane-preparedness-app-capstone.git
-```
-# Navigate to the project directory
-```bash
-cd hurricane-preparedness-app-capstone
-```
-
-# Install dependencies
-```bash
-pip install -r requirements.txt
-```
-
-# Run the application
-```bash
-python manage.py runserver
-```
