@@ -52,3 +52,12 @@ Below is a flowchart illustrating the system's architecture and design process:
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/hurricane-preparedness-app-capstone.git
+```
+
+---
+
+## Video Demo
+
+https://github.com/user-attachments/assets/ebcbaa62-10b4-4365-bea8-7f1effc5c2b9
+
+
